@@ -1,0 +1,33 @@
+﻿unit GranjastoqViewPadrao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.WinXCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TViewPadrao = class(TForm)
+    pnlPrincipal: TPanel;
+    pnlTop: TPanel;
+    SearchBox1: TSearchBox;
+    lblHeader: TLabel;
+    cbbTipoDeBusca: TComboBox;
+    lblTipoFiltro: TLabel;
+    pnlCentral: TPanel;
+    grdBase: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  ViewPadrao: TViewPadrao;
+
+implementation
+
+{$R *.dfm}
+
+end.

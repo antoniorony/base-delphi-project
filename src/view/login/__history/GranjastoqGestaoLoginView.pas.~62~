@@ -1,0 +1,65 @@
+﻿unit GranjastoqGestaoLoginView;
+
+interface
+
+uses
+  {Delphi}
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.WinXCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons,
+
+  {Projeto}
+  GranjastoqViewPadrao, 
+  GranjastoqControllerLogin;
+
+type
+  TGestaoLoginView = class(TViewPadrao)
+    dsUsuario: TDataSource;
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    procedure CarregarListaDeUsuariosNoGrid;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  GestaoLoginView: TGestaoLoginView;
+  lDataSource: TDataSource;
+  lControlleLogin: TControllerLogin;
+
+implementation
+uses
+  GranjastoqViewImages;
+
+{$R *.dfm}
+
+procedure TGestaoLoginView.CarregarListaDeUsuariosNoGrid();
+begin
+  lControlleLogin := TControllerLogin.Create();
+  lDataSource := TDataSource.Create(nil);
+
+  dsUsuario := lControlleLogin.BuscarUsuarios();
+  dsUsuario.DataSet.Open;
+  grdBase.DataSource := dsUsuario;
+
+end;
+
+procedure TGestaoLoginView.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+
+  if Assigned(lDataSource) then
+    lDataSource.Free;
+  if Assigned(lControlleLogin) then
+    lControlleLogin.Free;
+end;
+
+procedure TGestaoLoginView.FormShow(Sender: TObject);
+begin
+  inherited;
+  CarregarListaDeUsuariosNoGrid();
+end;
+
+end.

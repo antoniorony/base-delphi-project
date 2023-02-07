@@ -1,0 +1,24 @@
+﻿unit GranjastoqControllerConexao;
+
+interface
+
+type
+  TControllerConexao = class
+    private
+    public
+      function ReturnDataSetMysql : TDataModuleConnection;
+  end;
+
+implementation
+
+uses
+  GranjastoqConnection, GranjastoqModelFactory;
+
+{ TControllerConexao }
+
+function TControllerConexao.ReturnDataSetMysql: TDataModuleConnection;
+begin
+  Result := TModelConexaoFactory.Create.ReturnDataSetMysql;
+end;
+
+end.

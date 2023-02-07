@@ -1,0 +1,16 @@
+object DataModuleConnection: TDataModuleConnection
+  OldCreateOrder = False
+  Height = 252
+  Width = 371
+  object connection: TFDConnection
+    Params.Strings = (
+      'DriverID=MySQL')
+    Left = 312
+    Top = 16
+  end
+  object driverMysql: TFDPhysMySQLDriverLink
+    VendorLib = 'F:\Users\Antonio\Projetos\Delphi\granjastoq\libmysql.dll'
+    Left = 248
+    Top = 24
+  end
+end

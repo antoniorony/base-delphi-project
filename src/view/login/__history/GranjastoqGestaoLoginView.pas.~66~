@@ -1,0 +1,90 @@
+﻿unit GranjastoqGestaoLoginView;
+
+interface
+
+uses
+  {Delphi}
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.WinXCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons,
+
+  {Projeto}
+  GranjastoqViewPadrao, 
+  GranjastoqControllerLogin;
+
+type
+  TGestaoLoginView = class(TViewPadrao)
+    dsUsuario: TDataSource;
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure grdBaseDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    procedure CarregarListaDeUsuariosNoGrid;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  GestaoLoginView: TGestaoLoginView;
+  lDataSource: TDataSource;
+  lControlleLogin: TControllerLogin;
+
+implementation
+uses
+  GranjastoqViewImages;
+
+{$R *.dfm}
+
+procedure TGestaoLoginView.CarregarListaDeUsuariosNoGrid();
+begin
+  lControlleLogin := TControllerLogin.Create();
+  lDataSource := TDataSource.Create(nil);
+
+  dsUsuario := lControlleLogin.BuscarUsuarios();
+  dsUsuario.DataSet.Open;
+  grdBase.DataSource := dsUsuario;
+
+end;
+
+procedure TGestaoLoginView.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+
+  if Assigned(lDataSource) then
+    lDataSource.Free;
+  if Assigned(lControlleLogin) then
+    lControlleLogin.Free;
+end;
+
+procedure TGestaoLoginView.FormShow(Sender: TObject);
+begin
+  inherited;
+  CarregarListaDeUsuariosNoGrid();
+end;
+
+procedure TGestaoLoginView.grdBaseDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if not (gdSelected in State) then
+    begin
+      if Odd((Sender as TDBGrid).DataSource.DataSet.RecNo) then
+        (Sender as TDBGrid).Canvas.Brush.Color := clTeal
+      else
+        begin
+          (Sender as TDBGrid).Canvas.Brush.Color := $00F1F2F3;
+          (Sender as TDBGrid).Canvas.Font.Color:= clBlack;
+        end;
+ 
+      // Aplicando prto para a cor da fonte
+      //
+ 
+      (Sender as TDBGrid).Canvas.FillRect(Rect);
+      (Sender as TDBGrid).Canvas.TextOut(Rect.Left + 2, Rect.Top,
+      Column.Field.DisplayText);
+    end;
+end;
+
+end.

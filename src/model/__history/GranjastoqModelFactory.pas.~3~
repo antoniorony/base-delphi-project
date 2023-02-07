@@ -1,0 +1,14 @@
+﻿unit GranjastoqModelFactory;
+
+interface
+
+Type
+  TModelConexaoFactory = class
+    private
+    public
+      function DataSetMysql:
+  end;
+
+implementation
+
+end.

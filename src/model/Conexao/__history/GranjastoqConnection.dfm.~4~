@@ -1,0 +1,5 @@
+object DataModuleConnection: TDataModuleConnection
+  OldCreateOrder = False
+  Height = 252
+  Width = 371
+end

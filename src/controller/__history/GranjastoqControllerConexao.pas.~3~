@@ -1,0 +1,13 @@
+﻿unit GranjastoqControllerConexao;
+
+interface
+
+type
+  TControllerConexao = class
+    private
+    public
+  end;
+
+implementation
+
+end.

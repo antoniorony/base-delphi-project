@@ -1,0 +1,66 @@
+﻿unit GranjastoqControllerLogin;
+
+interface
+
+uses
+  Data.DB;
+
+type
+  TControllerLogin = class
+
+    private
+      Fid: LongInt;
+      FNomeDoUsuario,
+      FUsuario,
+      FSenhaDoUsuario: String;
+      FDataSource: TDataSource;
+
+    public
+      function LogarNoSistema(): Boolean;
+      function BuscarUsuarios(): TDataSource;
+      destructor Destroy; override;
+      property Id: LongInt read FId;
+      property NomeDoUsuario: String read FNomeDoUsuario write FNomeDoUsuario;
+      property Usuario: String read FUsuario write FUsuario;
+      property SenhaDoUsuario: String read FSenhaDoUsuario write FSenhaDoUsuario;
+      property DataSource: TDataSource read FDataSource write FDataSource;
+  end;
+
+implementation
+
+uses
+  GranjastoqModelLogin, Vcl.Dialogs, System.SysUtils;
+
+var
+  lModelLogin: TModelLogin;
+
+{ TControllerLogin }
+
+function TControllerLogin.BuscarUsuarios(): TDataSource;
+begin
+  lModelLogin := TModelLogin.Create();
+  FDataSource := TDataSource.Create(nil);
+
+  lModelLogin.BuscarInformacoesDoUsuario(Self);
+
+  ShowMessage(Self.DataSource.DataSet.RecordCount.ToString)
+
+  Result := Self.DataSource;
+end;
+
+destructor TControllerLogin.Destroy;
+begin
+  FDataSource.Free;
+  lModelLogin.Free;
+  inherited;
+end;
+
+function TControllerLogin.LogarNoSistema: Boolean;
+begin
+  lModelLogin := TModelLogin.Create();
+  Result := lModelLogin.ValidarLogin(Self);
+end;
+
+{ TControllerLogin }
+
+end.

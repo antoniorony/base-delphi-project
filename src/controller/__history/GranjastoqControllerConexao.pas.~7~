@@ -1,0 +1,17 @@
+﻿unit GranjastoqControllerConexao;
+
+interface
+
+uses
+  GranjastoqConnection;
+
+type
+  TControllerConexao = class
+    private
+    public
+      function DataSetMysql : TDataModuleConnection;
+  end;
+
+implementation
+
+end.
