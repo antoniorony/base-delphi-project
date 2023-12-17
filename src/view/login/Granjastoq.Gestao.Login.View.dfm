@@ -1,13 +1,17 @@
 inherited GestaoLoginView: TGestaoLoginView
   Caption = 'Gest'#227'o de usu'#225'rios'
   ClientHeight = 601
+  ClientWidth = 800
   OnClose = FormClose
   OnShow = FormShow
-  ExplicitWidth = 812
+  ExplicitHeight = 639
   TextHeight = 13
   inherited pnlPrincipal: TPanel
+    Width = 800
     Height = 601
+    ExplicitHeight = 600
     inherited pnlTop: TPanel
+      Width = 798
       inherited lblHeader: TLabel
         Width = 189
         Caption = 'GEST'#195'O DE USU'#193'RIOS'
@@ -31,7 +35,9 @@ inherited GestaoLoginView: TGestaoLoginView
       end
     end
     inherited pnlCentral: TPanel
+      Width = 798
       Height = 543
+      ExplicitWidth = 794
       inherited grdBase: TDBGrid
         Color = clNone
         DataSource = dsUsuario
@@ -47,7 +53,9 @@ inherited GestaoLoginView: TGestaoLoginView
           item
             Color = clTeal
             Expanded = False
-            FieldName = 'nome'
+            FieldName = 'idpersona'
+            Title.Caption = 'Codigo Pessoal'
+            Width = 120
             Visible = True
           end
           item

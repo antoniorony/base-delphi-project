@@ -5,10 +5,11 @@ interface
 uses
   {FireDac}
   FireDAC.Comp.Client,
+  Data.DB,
 
   {Projeto}
-  Granjastoq.Controller.Login,
-  Data.DB;
+  Granjastoq.Controller.Login;
+
 
 type
   TModelLogin = class
@@ -60,7 +61,8 @@ begin
 
   Conexao.DataSetMysql.connection.Connected := true;
   Query.Connection := Conexao.DataSetMysql.connection;
-  Query.SQL.Text := 'Select * from login where usuario LIKE :pUsuario and senha LIKE :pSenha';
+  Query.SQL.Text := 'Select * from login where usuario ';
+  Query.SQL.Add('LIKE :pUsuario and senha LIKE :pSenha ');
   Query.Params.ParamByName('pUsuario').AsString := Login.Usuario;
   Query.Params.ParamByName('pSenha').AsString := Login.SenhaDoUsuario;
   Query.Open;

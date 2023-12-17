@@ -15,8 +15,8 @@ object ViewPrincipal: TViewPrincipal
   OnActivate = FormActivate
   TextHeight = 13
   object mmMenuPrincipal: TMainMenu
-    Left = 8
-    Top = 16
+    Left = 40
+    Top = 8
     object Menu1: TMenuItem
       Caption = 'Administra'#231#227'o'
       object Usuarios1: TMenuItem

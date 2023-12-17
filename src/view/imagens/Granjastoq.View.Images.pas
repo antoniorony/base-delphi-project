@@ -3,9 +3,19 @@ unit Granjastoq.View.Images;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.ImageList, Vcl.ImgList,
-  Vcl.BaseImageCollection, Vcl.ImageCollection;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  System.ImageList,
+  Vcl.ImgList,
+  Vcl.BaseImageCollection,
+  Vcl.ImageCollection;
 
 type
   TViewImages = class(TForm)

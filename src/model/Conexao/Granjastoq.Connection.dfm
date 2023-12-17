@@ -13,7 +13,9 @@ object DataModuleConnection: TDataModuleConnection
     Top = 8
   end
   object driverMysql: TFDPhysMySQLDriverLink
-    VendorLib = 'F:\Users\Antonio\Projetos\Delphi\granjastoq\libmysql.dll'
+    VendorLib = 
+      'E:\Users\Antonio\Projetos\Delphi\base-delphi-project\libmysql.dl' +
+      'l'
     Left = 72
     Top = 8
   end
