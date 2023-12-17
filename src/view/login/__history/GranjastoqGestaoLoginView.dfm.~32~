@@ -1,0 +1,121 @@
+inherited GestaoLoginView: TGestaoLoginView
+  Caption = 'Gest'#227'o de usu'#225'rios'
+  OnClose = FormClose
+  OnShow = FormShow
+  ExplicitWidth = 812
+  ExplicitHeight = 638
+  TextHeight = 13
+  inherited pnlPrincipal: TPanel
+    ExplicitWidth = 796
+    ExplicitHeight = 599
+    inherited pnlTop: TPanel
+      ExplicitWidth = 794
+      inherited lblHeader: TLabel
+        Width = 189
+        Caption = 'GEST'#195'O DE USU'#193'RIOS'
+        ExplicitWidth = 189
+      end
+      inherited SearchBox1: TSearchBox
+        Font.Color = clTeal
+        ParentFont = False
+        Text = ''
+        OnKeyPress = SearchBox1KeyPress
+      end
+      inherited cbbTipoDeBusca: TComboBox
+        Font.Color = clTeal
+        ItemIndex = 0
+        ParentFont = False
+        Text = 'nome'
+        Items.Strings = (
+          'nome'
+          'usuario'
+          'senha')
+      end
+      object btnteste: TButton
+        Left = 211
+        Top = 16
+        Width = 67
+        Height = 25
+        Caption = 'btnteste'
+        TabOrder = 2
+        OnClick = btntesteClick
+      end
+    end
+    inherited pnlCentral: TPanel
+      ExplicitWidth = 794
+      ExplicitHeight = 541
+      inherited grdBase: TDBGrid
+        Color = clNone
+        DataSource = dsUsuario
+        GradientStartColor = clTeal
+        TitleFont.Style = []
+        Columns = <
+          item
+            Color = clTeal
+            Expanded = False
+            FieldName = 'id'
+            Visible = False
+          end
+          item
+            Color = clTeal
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
+            Color = clTeal
+            Expanded = False
+            FieldName = 'usuario'
+            Width = 130
+            Visible = True
+          end
+          item
+            Color = clTeal
+            Expanded = False
+            FieldName = 'senha'
+            ImeName = 'Portuguese (Brazilian ABNT)'
+            Width = 130
+            Visible = True
+          end>
+      end
+    end
+  end
+  object dsUsuario: TDataSource
+    Left = 193
+    Top = 513
+  end
+  object smxprtxls1: TSMExportToXLS
+    DataFormats.DateOrder = doDMY
+    DataFormats.DateSeparator = '/'
+    DataFormats.TimeSeparator = ':'
+    DataFormats.FourDigitYear = True
+    DataFormats.LeadingZerosInDate = True
+    DataFormats.ThousandSeparator = '.'
+    DataFormats.DecimalSeparator = ','
+    DataFormats.CurrencyString = 'R$'
+    DataFormats.BooleanTrue = 'True'
+    DataFormats.BooleanFalse = 'False'
+    DataFormats.UseRegionalSettings = False
+    KeyGenerator = 'SMExport 5.0 (b72)'
+    TitleStatus = 'Exporting...'
+    Statistic.CurrentRowHeight = 0
+    Columns = <>
+    Bands = <>
+    DefaultFont.Charset = DEFAULT_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = -11
+    DefaultFont.Name = 'Arial'
+    DefaultFont.Style = []
+    FileName = 
+      'F:\Arquivos de Programas\Embarcadero\Studio\22.0\bin\SMExport.XL' +
+      'S'
+    CharacterSet = csUnicode
+    DetailSources = <>
+    ExportStyle.Style = esNormal
+    ExportStyle.OddColor = clBlack
+    ExportStyle.EvenColor = clBlack
+    UserName = 'T-Gamer'
+    Left = 273
+    Top = 129
+  end
+end

@@ -2,16 +2,16 @@ program granjasEstoque;
 
 uses
   Vcl.Forms,
-  GranjastoqViewPrincipal in 'src\view\GranjastoqViewPrincipal.pas' {ViewPrincipal},
-  GranjastoqLoginView in 'src\view\login\GranjastoqLoginView.pas' {LoginView},
-  GranjastoqViewImages in 'src\view\imagens\GranjastoqViewImages.pas' {ViewImages},
-  GranjastoqConnection in 'src\model\Conexao\GranjastoqConnection.pas' {DataModuleConnection: TDataModule},
-  GranjastoqModelFactory in 'src\model\GranjastoqModelFactory.pas',
-  GranjastoqModelLogin in 'src\model\Login\GranjastoqModelLogin.pas',
-  GranjastoqControllerConexao in 'src\controller\GranjastoqControllerConexao.pas',
-  GranjastoqControllerLogin in 'src\controller\GranjastoqControllerLogin.pas',
-  GranjastoqViewPadrao in 'src\view\GranjastoqViewPadrao.pas' {ViewPadrao},
-  GranjastoqGestaoLoginView in 'src\view\login\GranjastoqGestaoLoginView.pas' {GestaoLoginView};
+  Granjastoq.View.Principal in 'src\view\Granjastoq.View.Principal.pas' {ViewPrincipal},
+  Granjastoq.Login.View in 'src\view\login\Granjastoq.Login.View.pas' {LoginView},
+  Granjastoq.View.Images in 'src\view\imagens\Granjastoq.View.Images.pas' {ViewImages},
+  Granjastoq.Connection in 'src\model\Conexao\Granjastoq.Connection.pas' {DataModuleConnection: TDataModule},
+  Granjastoq.Model.Factory in 'src\model\Granjastoq.Model.Factory.pas',
+  Granjastoq.Model.Login in 'src\model\Login\Granjastoq.Model.Login.pas',
+  Granjastoq.Controller.Conexao in 'src\controller\Granjastoq.Controller.Conexao.pas',
+  Granjastoq.Controller.Login in 'src\controller\Granjastoq.Controller.Login.pas',
+  Granjastoq.View.Padrao in 'src\view\Granjastoq.View.Padrao.pas' {ViewPadrao},
+  Granjastoq.Gestao.Login.View in 'src\view\login\Granjastoq.Gestao.Login.View.pas' {GestaoLoginView};
 
 {$R *.res}
 

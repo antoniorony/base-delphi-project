@@ -1,0 +1,36 @@
+object DataModuleConnection: TDataModuleConnection
+  Height = 194
+  Width = 338
+  object connection: TFDConnection
+    Params.Strings = (
+      'DriverID=MySQL'
+      'Database=granjas'
+      'Server=localhost'
+      'User_Name=root')
+    LoginPrompt = False
+    Transaction = transaction
+    Left = 152
+    Top = 8
+  end
+  object driverMysql: TFDPhysMySQLDriverLink
+    VendorLib = 'F:\Users\Antonio\Projetos\Delphi\granjastoq\libmysql.dll'
+    Left = 72
+    Top = 8
+  end
+  object fdgxwtcrsr1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 72
+    Top = 80
+  end
+  object transaction: TFDTransaction
+    Connection = connection
+    Left = 224
+    Top = 9
+  end
+  object qryGeral: TFDQuery
+    Connection = connection
+    Transaction = transaction
+    Left = 152
+    Top = 80
+  end
+end
