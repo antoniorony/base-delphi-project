@@ -59,10 +59,10 @@ procedure TLoginView.btnEntrarClick(Sender: TObject);
 var
   lControlleLogin: TControllerLogin;
 begin
-  lControlleLogin := TControllerLogin.Create();
+  lControlleLogin := TControllerLogin.Create(Self);
   try
-    lControlleLogin.Usuario := Usuario.Text;
-    lControlleLogin.SenhaDoUsuario := Senha.Text;
+    lControlleLogin.Login.Usuario := Usuario.Text;
+    lControlleLogin.Login.SenhaDoUsuario := Senha.Text;
 
     if lControlleLogin.LogarNoSistema() then
       Close()

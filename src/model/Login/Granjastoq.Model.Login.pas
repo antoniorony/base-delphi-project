@@ -1,76 +1,21 @@
-﻿unit Granjastoq.Model.Login;
+unit Granjastoq.Model.Login;
 
 interface
 
-uses
-  {FireDac}
-  FireDAC.Comp.Client,
-  Data.DB,
-
-  {Projeto}
-  Granjastoq.Controller.Login;
-
-
 type
-  TModelLogin = class
+  TLogin = class
     private
+      FSenhaDoUsuario: String;
+      FNomeDoUsuario: String;
+      FId: LongInt;
+      FUsuario: String;
     public
-      destructor Destroy; override;
-      function ValidarLogin(Login: TControllerLogin): Boolean;
-      procedure BuscarInformacoesDoUsuario(Login: TControllerLogin);
-
+      property Id: LongInt read FId write FId;
+      property NomeDoUsuario: String read FNomeDoUsuario write FNomeDoUsuario;
+      property Usuario: String read FUsuario write FUsuario;
+      property SenhaDoUsuario: String read FSenhaDoUsuario write FSenhaDoUsuario;
   end;
 
 implementation
-
-uses
-  Granjastoq.Model.Factory;
-
-var
-  Conexao: TModelConexaoFactory;
-  Query: TFDQuery;
-
-
-{ TModelLogin }
-
-procedure TModelLogin.BuscarInformacoesDoUsuario(Login: TControllerLogin);
-begin
-  Conexao := TModelConexaoFactory.Create;
-  Query := TFDQuery.Create(nil);
-
-  Conexao.DataSetMysql.connection.Connected := true;
-  Query.Connection := Conexao.DataSetMysql.connection;
-  Query.SQL.Text := 'Select * from login';
-  Query.Open;
-
-  Query.RecordCount;
-  Login.DataSource.DataSet := Query;
-end;
-
-destructor TModelLogin.Destroy;
-begin
-  Query.Free;
-  Conexao.Free;
-  inherited;
-end;
-
-function TModelLogin.ValidarLogin(Login: TControllerLogin): Boolean;
-begin
-  Conexao := TModelConexaoFactory.Create;
-  Query := TFDQuery.Create(nil);
-
-  Conexao.DataSetMysql.connection.Connected := true;
-  Query.Connection := Conexao.DataSetMysql.connection;
-  Query.SQL.Text := 'Select * from login where usuario ';
-  Query.SQL.Add('LIKE :pUsuario and senha LIKE :pSenha ');
-  Query.Params.ParamByName('pUsuario').AsString := Login.Usuario;
-  Query.Params.ParamByName('pSenha').AsString := Login.SenhaDoUsuario;
-  Query.Open;
-
-  if Query.RecordCount > 0 then
-    Result := true
-  else
-    Result := false;
-end;
 
 end.

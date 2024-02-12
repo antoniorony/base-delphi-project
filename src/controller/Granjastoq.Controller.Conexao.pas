@@ -11,8 +11,7 @@ type
 implementation
 
 uses
-  Granjastoq.Connection,
-  Granjastoq.Model.Factory;
+  Granjastoq.Connection;
 
 { TControllerConexao }
 

@@ -36,6 +36,8 @@ type
   private
     { Private declarations }
   public
+    destructor Destroy; override;
+
     { Public declarations }
   end;
 
@@ -48,5 +50,27 @@ implementation
 { TDataModuleConnection }
 
 { TDataModuleConnection }
+
+{ TDataModuleConnection }
+
+destructor TDataModuleConnection.Destroy;
+begin
+  if Assigned(connection) then
+    connection.Free;
+
+  if Assigned(driverMysql) then
+    driverMysql.Free;
+
+  if Assigned(fdgxwtcrsr1) then
+    fdgxwtcrsr1.Free;
+
+  if Assigned(transaction) then
+    transaction.Free;
+
+  if Assigned(qryGeral) then
+    qryGeral.Free;
+
+  inherited;
+end;
 
 end.

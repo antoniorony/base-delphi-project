@@ -3,7 +3,9 @@
 interface
 
 uses
-  Data.DB;
+  Data.DB,
+  System.Classes,
+  Granjastoq.Model.Login, System.Generics.Collections;
 
 type
   TControllerLogin = class
@@ -15,48 +17,74 @@ type
       FSenhaDoUsuario: String;
       FDataSource: TDataSource;
 
+      FLogin: TLogin;
+      FListaDeLogins: TList<TLogin>;
+
     public
       function LogarNoSistema(): Boolean;
-      function BuscarUsuarios(): TDataSource;
+      function BuscarUsuarios(): TList<TLogin>;
       destructor Destroy; override;
-      property Id: LongInt read FId;
-      property NomeDoUsuario: String read FNomeDoUsuario write FNomeDoUsuario;
-      property Usuario: String read FUsuario write FUsuario;
-      property SenhaDoUsuario: String read FSenhaDoUsuario write FSenhaDoUsuario;
+      constructor Create(AOwner: TComponent);
+      property Login: TLogin read FLogin write FLogin;
+      property ListaDeLogins: TList<TLogin> read FListaDeLogins write FListaDeLogins;
       property DataSource: TDataSource read FDataSource write FDataSource;
   end;
 
 implementation
 
 uses
-  Granjastoq.Model.Login,
   Vcl.Dialogs,
-  System.SysUtils;
+  System.SysUtils,
+  Granjastoq.Model.AllLogin;
 
-var
-  lModelLogin: TModelLogin;
 
 { TControllerLogin }
 
-function TControllerLogin.BuscarUsuarios(): TDataSource;
+function TControllerLogin.BuscarUsuarios(): TList<TLogin>;
+var
+  lModelLogin: TModelLogin;
+  lListaDeLogins: TList<TLogin>;
 begin
-  lModelLogin := TModelLogin.Create();
+  lModelLogin := TModelLogin.Create;
+  try
+    lListaDeLogins := lModelLogin.BuscarInformacoesDoUsuario();
+    Result := lListaDeLogins;
+  finally
+    lModelLogin.Free;
+  end;
+end;
+
+constructor TControllerLogin.Create(AOwner: TComponent);
+begin
   FDataSource := TDataSource.Create(nil);
-  lModelLogin.BuscarInformacoesDoUsuario(Self);
-  Result := Self.DataSource;
+  FLogin := TLogin.Create();
 end;
 
 destructor TControllerLogin.Destroy;
 begin
-  FDataSource.Free;
-  lModelLogin.Free;
+  if Assigned(FDataSource) then
+    FDataSource.Free;
+
+  if Assigned(FLogin) then
+    FLogin.Free;
+
   inherited;
 end;
 
 function TControllerLogin.LogarNoSistema: Boolean;
+var
+  lLoginModel: TModelLogin;
+  lIsLoginValido: Boolean;
 begin
-  lModelLogin := TModelLogin.Create();
-  Result := lModelLogin.ValidarLogin(Self);
+  lIsLoginValido := False;
+  lLoginModel := TModelLogin.Create();
+  try
+    lIsLoginValido := lLoginModel.ValidarLogin(Login);
+    Result := lIsLoginValido;
+  finally
+    lLoginModel.Free;
+  end;
+
 end;
 
 { TControllerLogin }

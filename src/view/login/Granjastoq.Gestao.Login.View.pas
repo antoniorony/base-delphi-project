@@ -29,7 +29,6 @@ type
   TGestaoLoginView = class(TViewPadrao)
     dsUsuario: TDataSource;
     procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SearchBox1KeyPress(Sender: TObject; var Key: Char);
   private
     procedure CarregarListaDeUsuariosNoGrid;
@@ -41,34 +40,45 @@ type
 
 var
   GestaoLoginView: TGestaoLoginView;
-  lDataSource: TDataSource;
-  lControlleLogin: TControllerLogin;
 
 implementation
+
 uses
-  Granjastoq.View.Images;
+  Granjastoq.View.Images,
+  System.Generics.Collections,
+  Granjastoq.Model.Login, FireDAC.Comp.Client;
 
 {$R *.dfm}
 
 procedure TGestaoLoginView.CarregarListaDeUsuariosNoGrid();
+var
+  lDataSource: TDataSource;
+  lControlleLogin: TControllerLogin;
+  lDataSet: TFDMemTable;
 begin
-  lControlleLogin := TControllerLogin.Create();
+  lControlleLogin := TControllerLogin.Create(nil);
   lDataSource := TDataSource.Create(nil);
+  lDataSet := TFDMemTable.Create(nil);
+  try
+    lControlleLogin.ListaDeLogins := TList<TLogin>.Create;
+    try
+      lDataSet := TFDMemTable(lControlleLogin.BuscarUsuarios());
+      dsUsuario.DataSet := lDataSet;
+      dsUsuario.DataSet.Open;
+      grdBase.DataSource := dsUsuario;
+    finally
+      lControlleLogin.Free;
+    end;
 
-  dsUsuario := lControlleLogin.BuscarUsuarios();
-  dsUsuario.DataSet.Open;
-  grdBase.DataSource := dsUsuario;
+  finally
+    if Assigned(lDataSource) then
+      lDataSource.Free;
+    if Assigned(lControlleLogin) then
+      lControlleLogin.Free;
+    if Assigned(lDataSet) then
+      lDataSet.Free;
+  end;
 
-end;
-
-procedure TGestaoLoginView.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  inherited;
-
-  if Assigned(lDataSource) then
-    lDataSource.Free;
-  if Assigned(lControlleLogin) then
-    lControlleLogin.Free;
 end;
 
 procedure TGestaoLoginView.FormShow(Sender: TObject);
@@ -83,11 +93,12 @@ begin
   FiltrarTabelaPorCampo();
 end;
 
-
 procedure TGestaoLoginView.FiltrarTabelaPorCampo();
 begin
   grdBase.DataSource.DataSet.Filtered := False;
-  grdBase.DataSource.DataSet.Filter := ' ' + cbbTipoDeBusca.Text + ' Like ' + QuotedStr('%' + SearchBox1.Text + '%');
+  grdBase.DataSource.DataSet.Filter := ' ' + cbbTipoDeBusca.Text + ' Like ' +
+    QuotedStr('%' + SearchBox1.Text + '%');
   grdBase.DataSource.DataSet.Filtered := True;
 end;
+
 end.
