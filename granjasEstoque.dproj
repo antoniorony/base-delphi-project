@@ -102,19 +102,15 @@
         </DelphiCompile>
         <DCCReference Include="src\view\Granjastoq.View.Principal.pas">
             <Form>ViewPrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\view\login\Granjastoq.Login.View.pas">
             <Form>LoginView</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\view\imagens\Granjastoq.View.Images.pas">
             <Form>ViewImages</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\model\Conexao\Granjastoq.Connection.pas">
             <Form>DataModuleConnection</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\model\Login\Granjastoq.Model.AllLogin.pas"/>
@@ -122,11 +118,9 @@
         <DCCReference Include="src\controller\Granjastoq.Controller.Login.pas"/>
         <DCCReference Include="src\view\Granjastoq.View.Padrao.pas">
             <Form>ViewPadrao</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\view\login\Granjastoq.Gestao.Login.View.pas">
             <Form>GestaoLoginView</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\model\Login\Granjastoq.Model.Login.pas"/>
         <BuildConfiguration Include="Base">

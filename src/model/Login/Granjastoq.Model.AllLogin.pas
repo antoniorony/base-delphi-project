@@ -18,7 +18,7 @@ type
     private
     public
       function ValidarLogin(Login: TLogin): Boolean;
-      function BuscarInformacoesDoUsuario(): TList<TLogin>;
+      procedure BuscarInformacoesDoUsuario(pListaDeLogins : TList<TLogin>; pLogin: TLogin);
 
   end;
 
@@ -34,14 +34,10 @@ var
 
 { TModelLogin }
 
-function TModelLogin.BuscarInformacoesDoUsuario(): TList<TLogin>;
-var
-  lListaDeLogins: TList<TLogin>;
-  lLogin: TLogin;
+procedure TModelLogin.BuscarInformacoesDoUsuario(pListaDeLogins : TList<TLogin>; pLogin: TLogin);
 begin
   Conexao := TDataModuleConnection.Create(nil);
   Query := TFDQuery.Create(nil);
-  lListaDeLogins := TList<TLogin>.Create;
   try
     Conexao.connection.Connected := true;
     Query.Connection := Conexao.connection;
@@ -50,21 +46,15 @@ begin
 
     while not Query.Eof do
       begin
-        lLogin := TLogin.Create;
-        try
-          lLogin.Id := Query.ParamByName('id').AsInteger;
-          lLogin.NomeDoUsuario := Query.ParamByName('nomedousuario').AsString;
-          lLogin.Usuario := Query.ParamByName('usuario').AsString;
-          lLogin.SenhaDoUsuario := Query.ParamByName('senha').AsString;
-        lListaDeLogins.Add(lLogin);
-        finally
-          lLogin.Free;
-        end;
+        pLogin.Id := Query.FieldByName('id').AsInteger;
+        pLogin.NomeDoUsuario := Query.FieldByName('nomedousuario').AsString;
+        pLogin.Usuario := Query.FieldByName('usuario').AsString;
+        pLogin.SenhaDoUsuario := Query.FieldByName('senha').AsString;
+        pListaDeLogins.Add(pLogin);
 
         Query.Next;
       end;
 
-      Result := lListaDeLogins;
   finally
     if Assigned(Conexao) then
       begin
@@ -72,7 +62,6 @@ begin
         Conexao.Free;
       end;
     Query.Free;
-    lListaDeLogins.Free;
   end;
 end;
 

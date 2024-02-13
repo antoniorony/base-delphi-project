@@ -23,14 +23,18 @@ uses
 
   {Projeto}
   Granjastoq.View.Padrao,
-  Granjastoq.Controller.Login;
+  Granjastoq.Controller.Login, Datasnap.DBClient;
 
 type
   TGestaoLoginView = class(TViewPadrao)
     dsUsuario: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure SearchBox1KeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
+    FControlleLogin: TControllerLogin;
+    FTabelaLoginTemporaria: TClientDataSet;
     procedure CarregarListaDeUsuariosNoGrid;
     procedure FiltrarTabelaPorCampo;
     { Private declarations }
@@ -46,39 +50,39 @@ implementation
 uses
   Granjastoq.View.Images,
   System.Generics.Collections,
-  Granjastoq.Model.Login, FireDAC.Comp.Client;
+  Granjastoq.Model.Login,
+  FireDAC.Comp.Client;
 
 {$R *.dfm}
 
 procedure TGestaoLoginView.CarregarListaDeUsuariosNoGrid();
-var
-  lDataSource: TDataSource;
-  lControlleLogin: TControllerLogin;
-  lDataSet: TFDMemTable;
 begin
-  lControlleLogin := TControllerLogin.Create(nil);
-  lDataSource := TDataSource.Create(nil);
-  lDataSet := TFDMemTable.Create(nil);
-  try
-    lControlleLogin.ListaDeLogins := TList<TLogin>.Create;
-    try
-      lDataSet := TFDMemTable(lControlleLogin.BuscarUsuarios());
-      dsUsuario.DataSet := lDataSet;
-      dsUsuario.DataSet.Open;
-      grdBase.DataSource := dsUsuario;
-    finally
-      lControlleLogin.Free;
-    end;
+  FTabelaLoginTemporaria.FieldDefs.Add('id', ftInteger, 0, True);
+  FTabelaLoginTemporaria.FieldDefs.Add('usuario', ftString, 150, True);
+  FTabelaLoginTemporaria.FieldDefs.Add('nomedousuario', ftString, 350, True);
+  FTabelaLoginTemporaria.FieldDefs.Add('senha', ftString, 250, True);
 
-  finally
-    if Assigned(lDataSource) then
-      lDataSource.Free;
-    if Assigned(lControlleLogin) then
-      lControlleLogin.Free;
-    if Assigned(lDataSet) then
-      lDataSet.Free;
-  end;
+  FTabelaLoginTemporaria.CreateDataSet;
+  FTabelaLoginTemporaria.Open;
 
+  FControlleLogin.BuscarUsuarios(FTabelaLoginTemporaria);
+  dsUsuario.DataSet := FTabelaLoginTemporaria;
+  dsUsuario.DataSet.Open;
+  grdBase.DataSource := dsUsuario;
+end;
+
+procedure TGestaoLoginView.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FControlleLogin := TControllerLogin.Create(nil);
+  FTabelaLoginTemporaria := TClientDataSet.Create(nil);
+end;
+
+procedure TGestaoLoginView.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FControlleLogin.Free;
+  FTabelaLoginTemporaria.Free;
 end;
 
 procedure TGestaoLoginView.FormShow(Sender: TObject);

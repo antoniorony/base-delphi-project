@@ -4,6 +4,7 @@ uses
   LeakCheck.Report,
   LeakCheck.Setup.Trace,
   LeakCheck.Report.FileLog,
+  midaslib,
   Vcl.Forms,
   Granjastoq.View.Principal in 'src\view\Granjastoq.View.Principal.pas' {ViewPrincipal},
   Granjastoq.Login.View in 'src\view\login\Granjastoq.Login.View.pas' {LoginView},

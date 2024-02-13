@@ -7,10 +7,10 @@ type
     private
       FSenhaDoUsuario: String;
       FNomeDoUsuario: String;
-      FId: LongInt;
+      FId: Integer;
       FUsuario: String;
     public
-      property Id: LongInt read FId write FId;
+      property Id: Integer read FId write FId;
       property NomeDoUsuario: String read FNomeDoUsuario write FNomeDoUsuario;
       property Usuario: String read FUsuario write FUsuario;
       property SenhaDoUsuario: String read FSenhaDoUsuario write FSenhaDoUsuario;

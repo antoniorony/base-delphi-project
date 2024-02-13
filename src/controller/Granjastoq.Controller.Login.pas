@@ -5,7 +5,9 @@ interface
 uses
   Data.DB,
   System.Classes,
-  Granjastoq.Model.Login, System.Generics.Collections;
+  Datasnap.DBClient,
+  Granjastoq.Model.Login,
+  System.Generics.Collections;
 
 type
   TControllerLogin = class
@@ -22,7 +24,7 @@ type
 
     public
       function LogarNoSistema(): Boolean;
-      function BuscarUsuarios(): TList<TLogin>;
+      procedure BuscarUsuarios(pTabelaLoginTemporaria: TClientDataSet);
       destructor Destroy; override;
       constructor Create(AOwner: TComponent);
       property Login: TLogin read FLogin write FLogin;
@@ -40,17 +42,34 @@ uses
 
 { TControllerLogin }
 
-function TControllerLogin.BuscarUsuarios(): TList<TLogin>;
+procedure TControllerLogin.BuscarUsuarios(pTabelaLoginTemporaria: TClientDataSet);
 var
   lModelLogin: TModelLogin;
   lListaDeLogins: TList<TLogin>;
+  lLogin: TLogin;
 begin
   lModelLogin := TModelLogin.Create;
+  lListaDeLogins := TList<TLogin>.Create;
+  lLogin := TLogin.Create;
+
   try
-    lListaDeLogins := lModelLogin.BuscarInformacoesDoUsuario();
-    Result := lListaDeLogins;
+    lModelLogin.BuscarInformacoesDoUsuario(lListaDeLogins, lLogin);
+
+    var I: Integer;
+    for I := 0 to lListaDeLogins.Count-1 do
+      begin
+        pTabelaLoginTemporaria.Edit;
+        pTabelaLoginTemporaria.FieldByName('id').AsInteger := lListaDeLogins.Items[I].Id;
+        pTabelaLoginTemporaria.FieldByName('usuario').AsString := lListaDeLogins.Items[I].Usuario;
+        pTabelaLoginTemporaria.FieldByName('nomedousuario').AsString := lListaDeLogins.Items[I].NomeDoUsuario;
+        pTabelaLoginTemporaria.FieldByName('senha').AsString := lListaDeLogins.Items[I].SenhaDoUsuario;
+        pTabelaLoginTemporaria.Post;
+      end;
+
   finally
     lModelLogin.Free;
+    lListaDeLogins.Free;
+    lLogin.Free;
   end;
 end;
 
